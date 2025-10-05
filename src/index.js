@@ -1,0 +1,43 @@
+//Importing Packages
+const express = require('express');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+
+//Load Environment Variables from .env file
+dotenv.config();
+
+
+//Connect DB
+mongoose.connect(process.env.MONGO_URI)
+    .then(()=> console.log('Successfully Connected to MongoDB Atlas'))
+    .catch(err=> console.error('Connection Error', err));
+
+//Initailzing the express app
+const app= express();
+
+
+//Import Routes
+const alertRoutes = require('./routes/alert.routes');
+
+//Simple Test Routes
+app.get('/', (req,res) =>{
+
+    res.send("Hello , Kasi Youth! Your Career Bot is running!");
+});
+
+
+//Use the Routes
+app.use('/api/alerts',alertRoutes);
+
+
+//Get a Port
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT,()=>{
+
+
+    console.log('Server running on PORT:' , PORT);
+
+});
+
