@@ -18,12 +18,12 @@ router.post('/', async (req, res) => {
     console.log(title," , ", link);
 
     if (!title || !link || !category) {
-      return res.status(400).send('Missing required fields');
+      return res.status(400).send({message:'Missing required fields'});
     }
 
     const newAlert = new Alert({ title, link, category, source });
     await newAlert.save();
-    res.status(201).send(newAlert);
+    res.status(201).send({ message: "Alert created successfully" });
 
   } catch (error) {
     console.error('error creating alert:',error);
